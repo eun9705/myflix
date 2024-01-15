@@ -1,0 +1,23 @@
+export const requests = {
+    getNowPlayingMovie:"movie/now_playing",
+    getTrendingMovie: "/trending/movie/week",
+    getDiscoverMovie: "/discover/movie",
+    getTopRatedMovie: "/movie/top_rated",
+    getActionMovie:"/discover/movie?with_genres=28",
+    getComedyMovie:"/discover/movie?with_genres=35",
+    getFantasyMovie:"/discover/movie?with_genres=14",
+    getRomanceMovie:"/discover/movie?with_genres=10749",
+    getAnimation:"/discover/movie?with_genres=16",
+    getSearchMovie:"/search/movie",
+
+    getNowPlayingTv:"tv/on_the_air",
+    getTrendingTv: "/trending/tv/week",
+    getDiscoverTv: "/discover/tv",
+    getTopRatedTv: "/tv/top_rated",
+    getActionTv:"/discover/tv?with_genres=10759",
+    getComedyTv:"/discover/tv?with_genres=35",
+    getFantasyTv:"/discover/tv?with_genres=10764",
+    getRomanceTv:"/discover/tv?with_genres=10749",
+    getAnimationTv:"/discover/tv?with_genres=16",
+    getSearchTv:"/search/tv",
+}
