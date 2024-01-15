@@ -28,7 +28,6 @@ const Header = () => {
             setIsLoginState(false);
             setUserState({uid:""});
             localStorage.removeItem('token');
-            localStorage.removeItem('rfToken');
             routeTo('/');
         }catch(error) {
             console.log(error);
