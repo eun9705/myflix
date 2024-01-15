@@ -30,7 +30,7 @@ const ContentResultList = ({resultContent}:ContentResultListProps) => {
                 </li>
             })}
         </ul>
-        {viewModal && <DetailModal selectedContent={selectedMovie} onClickFunc={closeModal} />}
+        {(selectedMovie && viewModal) && <DetailModal selectedContent={selectedMovie} onClickFunc={closeModal} />}
     </SearchResultListWrapper>
 }
 

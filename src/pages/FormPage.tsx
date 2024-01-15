@@ -77,11 +77,11 @@ const FormPage = () => {
         const pwValue = pwRef.current!.value;
         try {
             const { user } = await signInWithEmailAndPassword(authService,emailValue,pwValue);
-            const { stsTokenManager, uid} = user;
-            console.log(user);
-            if(typeof(user) === 'object') {
-                localStorage.setItem('token',stsTokenManager.accessToken);
-                localStorage.setItem('rfToken',stsTokenManager.refreshToken);
+            const idTokenResult = await user.getIdTokenResult();
+
+            const { uid } = user || {};
+            if(user) {
+                localStorage.setItem('token',idTokenResult.token);
                 setIsLoginState(true);
                 setUserState({uid:uid});
                 return;

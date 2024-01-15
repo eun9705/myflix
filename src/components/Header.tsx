@@ -51,7 +51,7 @@ const Header = () => {
         {isLogIn ? <GlobalNavigationBar navigationContent={GlobalNavigationBarContent}/>: <BasicButton name="로그인" size="small" onClickFunc={()=>routeTo('/login')} />}
         {isLogIn && <RightSideWrapper>
             <SearchWrapper>
-                <Icon icon='search' width="2rem" height="2rem"/>
+                <Icon icon='search' />
                 <input type="text" onChange={sendQuery} placeholder='제목, 사람, 장르' id='header-input'/>
             </SearchWrapper>
             <BasicButton name='로그아웃' onClickFunc={()=>logout()} size="small"/>

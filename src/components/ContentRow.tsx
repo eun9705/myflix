@@ -76,7 +76,7 @@ const ContentRow = ({title,fetchUrl}:MovieRowProps) => {
                 </SwiperSlide>
             })}
         </Swiper>
-        {isOpen && <DetailModal selectedContent={selectedContent} onClickFunc={closeModal}/>}
+        {(selectedContent && isOpen) && <DetailModal selectedContent={selectedContent} onClickFunc={closeModal}/>}
     </MovieListWrapper>
 }
 

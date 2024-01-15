@@ -34,8 +34,8 @@ const RepresentativeImage = ({genres}:RepresentativeImageProps)=> {
         setContentInfo(movieDetail);
     }
 
-    const truncatOverview = (str?:string,cutNum?:number) => {
-        return str?.length > cutNum ? str.substring(0, cutNum) + "..." : str;
+    const truncatOverview = (str:string | undefined,cutNum:number) => {
+        return str !== undefined ? str?.length > cutNum ? str.substring(0, cutNum) + "..." : str : null;
     };
 
     const openDetailModal = () => {

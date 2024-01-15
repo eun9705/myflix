@@ -13,7 +13,7 @@ import IconButton from "./IconButton";
 import { arrayRemove, arrayUnion, doc,getDoc, setDoc } from "firebase/firestore";
 
 type DetailProps = {
-    selectedContent:ContentInfoType | undefined;
+    selectedContent:ContentInfoType;
     onClickFunc:() => void,
 }
 
@@ -25,7 +25,7 @@ const DetailModal = ({selectedContent,onClickFunc}:DetailProps) => {
     const [contentIdArr,setContentIdArr] = useState<number[]>([]);
     const { currentUrl,routeTo } = useRouter();
     const useStatus = useRecoilValue(userState);
-    const { title,id,original_name,name,overview } = selectedContent;
+    const { title,id,original_name,name,overview }:ContentInfoType = selectedContent;
     
     let category:string = '';
     if(selectedContent?.category !== undefined) {
@@ -155,7 +155,7 @@ const DetailModal = ({selectedContent,onClickFunc}:DetailProps) => {
                                 })}
                             </ul>
                         </DetailList>
-                        {credits?.length > 15 && <button className="detail-btn" onClick={()=>{setViewAll(!viewAll)}}>{viewAll ? "닫기" : "더보기"}</button>}
+                        {(credits && credits.length > 15) && <button className="detail-btn" onClick={()=>{setViewAll(!viewAll)}}>{viewAll ? "닫기" : "더보기"}</button>}
                     </ContentWrapper>
                 </MovideModalContent>
             </ScrollArea>
