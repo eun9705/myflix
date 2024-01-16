@@ -59,7 +59,7 @@ const Header = () => {
         {isLogIn && <RightSideWrapper>
             <SearchWrapper>
                 <Icon icon='search' />
-                <input type="text" onChange={sendQuery} placeholder='제목, 사람, 장르' id='header-input'/>
+                <input type="text" onChange={sendQuery} placeholder='제목, 장르' id='header-input'/>
             </SearchWrapper>
             <BasicButton name='로그아웃' onClickFunc={()=>logout()} size="small"/>
         </RightSideWrapper>}
