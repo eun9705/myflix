@@ -5,7 +5,8 @@ TMDB Open API, Firebase를 활용하여 제작한 서비스입니다.
 ## ✔ 프로젝트 소개
 TMDB Open API를 이용하여 Netflix와 비슷하게 구현해본 웹 서비스 입니다.<br />
 Button, form 요소를 최대한 재사용할 수 있는 방향으로 컴포넌트를 구성해보았으며,<br />
-React,Recoil,Vite, Styled-components,Typescript, useRouter, useScroll, useDebounce custom hook을 사용하여 구현하였습니다.
+React,Recoil,Vite, Styled-components,Typescript, useRouter, useScroll, useDebounce custom hook을 사용하여 구현하였습니다.<br /><br />
+※ 1920* 1080에 최적화 되어있습니다(반응형 추후 업데이트 예정)
 
 
 <p align="center">
@@ -74,8 +75,10 @@ test12345!
 ```
 src
  ┣ api
+ ┃ ┣ authError.ts
  ┃ ┣ axios.ts
- ┃ ┗ requests.ts
+ ┃ ┣ requests.ts
+ ┃ ┗ tmdbError.ts
  ┣ assets
  ┃ ┣ home_bg.jpg
  ┃ ┗ logo.svg
@@ -107,7 +110,6 @@ src
  ┃ ┣ Home.tsx
  ┃ ┣ MoviePage.tsx
  ┃ ┣ MyListPage.tsx
- ┃ ┣ PageNotFoundPage.tsx
  ┃ ┣ SerachPage.tsx
  ┃ ┗ TvPage.tsx
  ┣ style
@@ -123,4 +125,19 @@ src
  ┣ router.tsx
  ┗ vite-env.d.ts
 ```
+#### 구조 설명
+##### useRouter 
+- useNavigate 재활용한 custom hook. 현재 url 주소를 얻거나 페이지 이동, 이전페이지로 이동 등의 함수가 정의.
+##### useDebounce
+- scrollY의 값을 얻기 위해 너무 잦은 리렌더링이 발생. 그래서 useDeboundce를 사용하여 리렌더링을 최소화하고자 함
+- 검색어를 입력할때마다 검색 영화가 보이는 것을 구현하고자 하였고 이는 api 호출이 빈번하게 이뤄지기 때문에 서버에 부담을 줄 수 밖에 없다고 판단. useDeboundce를 사용하여 api 호출을 최소화하고자 함
+##### atom/login.ts
+- 로그인 상태를 전역에서 관리하기 위해 사용.
+- 사용자 uid의 경우 새로고침 시 값이 유지되지 않기 때문에 recoil-persist 사용
+##### atom/authError.ts
+- firebase api 관련 에러 처리
+- 추후 에러처리 더 업데이트 예정
+##### atom/tmdbError.ts
+- tmdb open api 관련 에러 처리
+- 추후 에러처리 더 업데이트 예정
 
