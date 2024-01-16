@@ -85,15 +85,7 @@ const routerData:RouterElement[] = [
         element:<ContentPlayPage />,
         isAuth:true,
         showMenu:false        
-    },
-    {
-        id:8,
-        label:"",
-        path:"/*",
-        element:<></>,
-        isAuth:false,
-        showMenu:false
-    },
+    }
 ]
 
 export const routers = createBrowserRouter(
