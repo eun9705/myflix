@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useEffect } from 'react';
+import { ChangeEvent, useCallback } from 'react';
 import { Link } from "react-router-dom";
 import { useRecoilValue,useSetRecoilState } from 'recoil';
 import { isLoggedInState, userState } from 'atom/login';
@@ -21,7 +21,7 @@ import { tmdbError } from 'api/tmdbError';
 const Header = () => {
     const setIsLoginState = useSetRecoilState(isLoggedInState);
     const setUserState = useSetRecoilState(userState);
-    const { currentUrl,routeTo } = useRouter();
+    const { routeTo } = useRouter();
 
     const logout = useCallback(async() => {
         const checkoutLogout = window.confirm('로그아웃 하시겠습니까?');
@@ -48,10 +48,6 @@ const Header = () => {
     const { scrollY }  = useScroll();
     const debouncedScollY = useDebounce(scrollY,300);
     const isLogIn = useRecoilValue(isLoggedInState);
-
-    useEffect(()=>{
-        // document.getElementById('header-input').value = '';
-    },[currentUrl]);
     
     return <HeaderWrapper className={debouncedScollY > 30 ? "on" : ""}>
         <Link to={'/'} className='mobile-none'><img src={logo} alt="로고" /></Link>

@@ -32,7 +32,6 @@ export const GlobalStyle = createGlobalStyle`
     `}
     ${DeviceQuery.xsmall`
         html { font-size:25%; }
-        // body { font-size:3rem; }
         .mobile-none { display:none; }
     `}
 `
