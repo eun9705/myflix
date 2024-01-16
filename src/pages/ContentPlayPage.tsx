@@ -39,11 +39,7 @@ const CotentPlayModalWrapper = styled.div`
         ${FlexColumnCenterCenter}
         width: 5rem;height:5rem;
         background-color:#333;
-        /* border-radius:50%; */
         transform:rotate(180deg);
-        /* svg {
-            width: 4rem;height:4rem;
-        } */
     }
 `
 

@@ -24,8 +24,6 @@ export const IconSet:Record<iconName,icon> = {
         path:["M1.15625 0.5L8.09767 7.44142M1.17571 14.3929L8.11713 7.45145"],
         viewBox:"0 0 9 17",
         stroke:"#333",
-        width:"9",
-        height:"20",
         strokeWidth:"2",
         strokeLinecap:"round"
     },

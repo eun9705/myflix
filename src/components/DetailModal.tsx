@@ -1,4 +1,6 @@
 import { useCallback, useEffect,useState } from "react";
+import axios from "axios";
+import { tmdbError } from "api/tmdbError";
 import { instance } from "api/axios";
 import { useRouter } from "hooks/useRouter";
 import { useRecoilValue } from "recoil";
@@ -11,6 +13,7 @@ import BasicButton from "./BasicButton";
 import Icon from "./Icon";
 import IconButton from "./IconButton";
 import { arrayRemove, arrayUnion, doc,getDoc, setDoc } from "firebase/firestore";
+
 
 type DetailProps = {
     selectedContent:ContentInfoType;
@@ -47,7 +50,11 @@ const DetailModal = ({selectedContent,onClickFunc}:DetailProps) => {
             setCredits(data.credits.cast);
             setGenres(data.genres);
         }catch(error){
-            console.log(error);
+            if(axios.isAxiosError(error)) {
+                tmdbError(error.response?.data.status_code);
+            }else {
+                alert('네트워크 오류 또는 서버 응답 없음');
+            }
         }
     }
 
@@ -56,8 +63,12 @@ const DetailModal = ({selectedContent,onClickFunc}:DetailProps) => {
         try {
             const res = await getDoc(favorites);
             return res.data()?.movie === undefined ? null : res.data()?.movie;
-        }catch(error) {
-            console.log(error);
+        }catch(error){
+            if(axios.isAxiosError(error)) {
+                tmdbError(error.response?.data.status_code);
+            }else {
+                alert('네트워크 오류 또는 서버 응답 없음');
+            }
         }
     }
 
@@ -66,8 +77,12 @@ const DetailModal = ({selectedContent,onClickFunc}:DetailProps) => {
         try {
             const res = await getDoc(favorites);
             return res.data()?.tv === undefined ? null : res.data()?.tv;
-        }catch(error) {
-            console.log(error);
+        }catch(error){
+            if(axios.isAxiosError(error)) {
+                tmdbError(error.response?.data.status_code);
+            }else {
+                alert('네트워크 오류 또는 서버 응답 없음');
+            }
         }
     }
 
@@ -93,8 +108,12 @@ const DetailModal = ({selectedContent,onClickFunc}:DetailProps) => {
             category === 'movie' ? params = { movie:arrayUnion(id) } : params = {tv:arrayUnion(id)};
             await setDoc(favorites,params, { merge:true });
             concatArr();
-        }catch(error) {
-            console.log(error);
+        }catch(error){
+            if(axios.isAxiosError(error)) {
+                tmdbError(error.response?.data.status_code);
+            }else {
+                alert('네트워크 오류 또는 서버 응답 없음');
+            }
         }
     },[]);
 
@@ -104,8 +123,12 @@ const DetailModal = ({selectedContent,onClickFunc}:DetailProps) => {
             category === 'movie' ? params = { movie:arrayRemove(id) } : params = {tv:arrayRemove(id)};
             await setDoc(favorites,params, { merge:true });
             concatArr();
-        }catch(error) {
-            console.log(error);
+        }catch(error){
+            if(axios.isAxiosError(error)) {
+                tmdbError(error.response?.data.status_code);
+            }else {
+                alert('네트워크 오류 또는 서버 응답 없음');
+            }
         }
     },[]);
 

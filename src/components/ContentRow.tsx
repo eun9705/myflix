@@ -6,6 +6,9 @@ import {Navigation, Pagination, Scrollbar, A11y} from 'swiper/modules';
 import 'swiper/css';
 import { ContentInfoType } from "types/movie";
 import DetailModal from "./DetailModal";
+import { DeviceQuery } from "style/responsive";
+import axios from "axios";
+import { tmdbError } from "api/tmdbError";
 
 type MovieRowProps = {
     title:string,
@@ -18,12 +21,20 @@ const ContentRow = ({title,fetchUrl}:MovieRowProps) => {
     const [movieList,setMovieList] = useState<ContentInfoType[]>([]);
     const [selectedContent,setSelectedContent] = useState<ContentInfoType>();
     const getMovieData = useCallback(async () => {
-        const res = await instance.get(fetchUrl,{
-            params: { 
-                append_to_response: "videos" 
+        try {
+            const res = await instance.get(fetchUrl,{
+                params: { 
+                    append_to_response: "videos" 
+                }
+            });
+            setMovieList(res.data.results);
+        }catch(error) {
+            if(axios.isAxiosError(error)) {
+                tmdbError(error.response?.data.status_code);
+            }else {
+                alert('네트워크 오류 또는 서버 응답 없음');
             }
-        });
-        setMovieList(res.data.results);
+        }
     },[fetchUrl]);
 
     useEffect(()=>{
@@ -90,6 +101,15 @@ const ImgWrapper = styled.div`
     position: relative;
     width:97%;height:22vw;
     img { object-fit:cover;width:100%;min-height:100%;border-radius:2px; }   
+    ${DeviceQuery.large`
+        height:25vw;
+    `}
+    ${DeviceQuery.medium`
+        height:32vw;
+    `}
+    ${DeviceQuery.small`
+        height:40vw;
+    `}
 `
 
 export default ContentRow;

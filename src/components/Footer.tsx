@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { DeviceQuery } from "style/responsive";
 import styled from "styled-components";
 
 const Footer = () => {
@@ -30,6 +31,9 @@ const FooterWapper = styled.footer`
     max-height: 98rem;padding: 4%;box-sizing:border-box;
     ul { display: grid;grid-template-columns: repeat(4,1fr);grid-row-gap:2rem;margin-bottom:80px; }
     * { color:${({theme})=>theme.colorVariant.black800};font-size:13px; }
+    ${DeviceQuery.xsmall`
+        ul { grid-template-columns: repeat(2,1fr); }
+    `}
 `
 
 export default Footer;

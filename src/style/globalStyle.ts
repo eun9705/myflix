@@ -33,6 +33,7 @@ export const GlobalStyle = createGlobalStyle`
     ${DeviceQuery.xsmall`
         html { font-size:25%; }
         // body { font-size:3rem; }
+        .mobile-none { display:none; }
     `}
 `
 
@@ -89,7 +90,15 @@ export const CommonInput = styled.input<{width?:string,height?:string}>`
     width: ${(props)=>props.width || '100%'};
     height: ${(props)=>props.height || '4.75rem'};
     padding:1.5rem 1rem;background:rgba(0,0,0,.7);border: 1px solid ${({theme})=>theme.colorVariant.mainColor};border-radius:5px;box-sizing:border-box;
-    font-size: 1.6rem;
-    &::placeholder { font-size:1.6rem; }
+    font-size: 2rem;
+    &::placeholder { font-size:2rem; }
+    ${DeviceQuery.medium`
+        height:7rem;
+    `}
+    ${DeviceQuery.xsmall`
+        height:13rem;
+        font-size:4rem;
+        &::placeholder { font-size:4rem; }
+    `}
 `
         

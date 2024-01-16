@@ -6,8 +6,10 @@ import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { isLoggedInState, userState } from "atom/login";
 import { useRouter } from "hooks/useRouter";
 import styled from "styled-components";
-import { CommonInput, CommonPageWrapper, FlexColumn, Font500 } from "style/globalStyle";
+import { CommonInput, CommonPageWrapper, FlexColumn, FlexColumnCenter, Font500 } from "style/globalStyle";
 import BasicButton from "components/BasicButton";
+import { DeviceQuery } from "style/responsive";
+import { authError } from "api/authError";
 
 const loginFormData = {
     title:'로그인',
@@ -67,8 +69,8 @@ const FormPage = () => {
                 alert(`회원가입을 축하합니다!\n로그인 후 마이플릭스를 즐겨보세요`);
                 routeTo('/login');
             }
-        }catch(error) {
-            console.log(error);
+        }catch(error:any) {
+            authError(error.code);
         }
     },[]);
 
@@ -84,11 +86,10 @@ const FormPage = () => {
                 localStorage.setItem('token',idTokenResult.token);
                 setIsLoginState(true);
                 setUserState({uid:uid});
-                routeTo('/movie');
-                
+                routeTo('/movie');   
             }
-        }catch(error) {
-            console.log(error);
+        }catch(error:any) {
+            authError(error.code);
         }
 
     },[]);
@@ -121,6 +122,7 @@ const FormPage = () => {
             <h2>{title}</h2>
             <CommonInput type="text" name="email" placeholder="이메일 주소" ref={emailRef}/>
             <CommonInput type="password" name="password" placeholder="비밀번호" autoComplete="on" className="last" ref={pwRef} onKeyDown={enterHandler}/>
+            {currentUrl === '/sign-up' && <span>* 비밀번호 영문 숫자 특수기호 조합 8-15자리</span>}
             <BasicButton name={title} height="4.77rem" onClickFunc={currentUrl === '/login' ? onLoginSubmit : onSingUpSubmit}/>
             <div>
                 {text}
@@ -133,13 +135,14 @@ const FormPage = () => {
 const FormContent = styled.article`
     position:relative;z-index:2;
     ${FlexColumn};
-    width:50rem;min-height:30rem;padding:6rem 6.8rem;background-color:rgba(0,0,0,.75);border-radius:4px;box-sizing:border-box;
-    h2 { margin-bottom:3rem;font-size:3vw; }
+    width:500px;min-height:30rem;padding:6rem 6.8rem;background-color:rgba(0,0,0,.75);border-radius:4px;box-sizing:border-box;
+    h2 { margin-bottom:3rem;font-size:4rem; }
     form { 
         ${FlexColumn};
     }
     div {
         color:${({theme})=>theme.colorVariant.black800};
+        font-size:1.6rem;
     }
     a {
         ${Font500}
@@ -147,7 +150,18 @@ const FormContent = styled.article`
     input {
         &.last { margin-top:1rem; }    
     }
+    span { font-size:1.4rem;color:${({theme})=>theme.colorVariant.black800}; }
     button { margin:3rem 0 1rem; }
+    ${DeviceQuery.medium`
+        width:65rem;height:50rem;
+    `}
+    ${DeviceQuery.xsmall`
+        h2 { font-size:5rem; }
+        position:relative;z-index:1;
+        width:100%;height:100%;background-color:#000;
+        ${FlexColumnCenter}
+        div { font-size:4rem; }
+    `} 
 `
 
 export default FormPage;   

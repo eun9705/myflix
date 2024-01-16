@@ -14,6 +14,9 @@ import GlobalNavigationBar from "./GlobalNavigationBar";
 import BasicButton from "./BasicButton";
 import Icon from './Icon';
 import logo from "assets/logo.svg";
+import { DeviceQuery } from 'style/responsive';
+import axios from 'axios';
+import { tmdbError } from 'api/tmdbError';
 
 const Header = () => {
     const setIsLoginState = useSetRecoilState(isLoggedInState);
@@ -29,8 +32,12 @@ const Header = () => {
             setUserState({uid:""});
             localStorage.removeItem('token');
             routeTo('/');
-        }catch(error) {
-            console.log(error);
+        }catch(error){
+            if(axios.isAxiosError(error)) {
+                tmdbError(error.response?.data.status_code);
+            }else {
+                alert('네트워크 오류 또는 서버 응답 없음');
+            }
         }
     },[]);
 
@@ -47,7 +54,7 @@ const Header = () => {
     },[currentUrl]);
     
     return <HeaderWrapper className={debouncedScollY > 30 ? "on" : ""}>
-        <Link to={'/'}><img src={logo} alt="로고" /></Link>
+        <Link to={'/'} className='mobile-none'><img src={logo} alt="로고" /></Link>
         {isLogIn ? <GlobalNavigationBar navigationContent={GlobalNavigationBarContent}/>: <BasicButton name="로그인" size="small" onClickFunc={()=>routeTo('/login')} />}
         {isLogIn && <RightSideWrapper>
             <SearchWrapper>
@@ -67,6 +74,12 @@ const HeaderWrapper = styled.header`
         background-color: ${({theme})=>theme.colorVariant.black900};
     }
     img { display:block; }
+    ${DeviceQuery.medium`
+        height:9rem;
+    `}
+     ${DeviceQuery.xsmall`
+        height:15rem;
+    `}
 `
 
 const RightSideWrapper = styled.div`

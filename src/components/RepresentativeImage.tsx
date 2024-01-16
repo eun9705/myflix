@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { requests } from "api/requests";
+import axios from "axios";
+import { tmdbError } from "api/tmdbError";
 import { instance } from "api/axios";
 import { ContentInfoType } from "types/movie";
 import { FlexColumnCenter, FlexRowCenter, Font700 } from "style/globalStyle";
 import { useRouter } from "hooks/useRouter";
 import BasicButton from "./BasicButton";
 import DetailModal from "./DetailModal";
+
 
 type RepresentativeImageProps = {
     genres:string
@@ -19,19 +22,27 @@ const RepresentativeImage = ({genres}:RepresentativeImageProps)=> {
     const apiUrl = genres === 'movie' ? requests.getNowPlayingMovie : requests.getNowPlayingTv;
 
     const getNotPlayingMovieData = async () => {
-        const res = await instance.get(apiUrl);
-        const contentId = res.data.results[
-            Math.floor(Math.random() * res.data.results.length)
-        ].id;
-      
+        try {
+            const res = await instance.get(apiUrl);
+            const contentId = res.data.results[
+                Math.floor(Math.random() * res.data.results.length)
+            ].id;
         
-        const { data: movieDetail } = await instance.get(`${genres}/${contentId}`, {
-            params: { 
-                append_to_response: "videos" 
+            
+            const { data: movieDetail } = await instance.get(`${genres}/${contentId}`, {
+                params: { 
+                    append_to_response: "videos" 
+                }
+            });
+            
+            setContentInfo(movieDetail);
+        }catch(error){
+            if(axios.isAxiosError(error)) {
+                tmdbError(error.response?.data.status_code);
+            }else {
+                alert('네트워크 오류 또는 서버 응답 없음');
             }
-        });
-        
-        setContentInfo(movieDetail);
+        }
     }
 
     const truncatOverview = (str:string | undefined,cutNum:number) => {

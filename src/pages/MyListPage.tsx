@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { tmdbError } from "api/tmdbError";
 import { instance } from "api/axios";
 import styled from "styled-components";
 import { ContentInfoType } from "types/movie";
@@ -7,6 +9,7 @@ import { userState } from "atom/login";
 import ContentResultList from "components/ContentResultList";
 import { db } from "firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
+
 
 const MyListPage = () => {
     const [favoriteData,setFavoriteData] = useState<ContentInfoType[]>([]);
@@ -20,8 +23,12 @@ const MyListPage = () => {
                     const res = await instance.get(`movie/${movieItem}`);
                     res.data['category'] = 'movie';
                     return res.data;
-                } catch (error) {
-                    console.log(error);
+                } catch(error){
+                    if(axios.isAxiosError(error)) {
+                        tmdbError(error.response?.data.status_code);
+                    }else {
+                        alert('네트워크 오류 또는 서버 응답 없음');
+                    }
                     return null;
                 }
             })
@@ -37,8 +44,12 @@ const MyListPage = () => {
                     const res = await instance.get(`tv/${tvItem}`);
                     res.data['category'] = 'tv';
                     return res.data;
-                } catch (error) {
-                    console.log(error);
+                } catch(error){
+                    if(axios.isAxiosError(error)) {
+                        tmdbError(error.response?.data.status_code);
+                    }else {
+                        alert('네트워크 오류 또는 서버 응답 없음');
+                    }
                     return null;
                 }
             })
