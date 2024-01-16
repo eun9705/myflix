@@ -45,6 +45,7 @@ const Header = () => {
     useEffect(()=>{
         // document.getElementById('header-input').value = '';
     },[currentUrl]);
+    
     return <HeaderWrapper className={debouncedScollY > 30 ? "on" : ""}>
         <Link to={'/'}><img src={logo} alt="로고" /></Link>
         {isLogIn ? <GlobalNavigationBar navigationContent={GlobalNavigationBarContent}/>: <BasicButton name="로그인" size="small" onClickFunc={()=>routeTo('/login')} />}
@@ -65,6 +66,7 @@ const HeaderWrapper = styled.header`
     &.on {
         background-color: ${({theme})=>theme.colorVariant.black900};
     }
+    img { display:block; }
 `
 
 const RightSideWrapper = styled.div`

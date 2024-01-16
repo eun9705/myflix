@@ -30,7 +30,7 @@ const NavigationWrapper = styled.nav`
         ${FlexRowCenter} 
     }
     li {
-        margin: 0 1rem;
+        margin: 0 1rem;cursor: pointer;
     }
 `
 

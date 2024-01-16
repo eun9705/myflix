@@ -38,7 +38,7 @@ const SearchResultListWrapper = styled.div`
     > ul {
         display: grid;grid-template-columns: repeat(4,1fr);gap: 8px;width: 100%;margin-top:10px;
     }
-    img { min-width:232px;height:12.5vw;object-fit:cover; }
+    img { min-width:200px;height:12.5vw;object-fit:cover; }
 `
 
 export default ContentResultList;

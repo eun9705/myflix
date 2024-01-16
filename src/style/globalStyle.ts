@@ -1,26 +1,39 @@
 import styled, { createGlobalStyle, css } from "styled-components";
 import reset from "styled-reset";
 import mainBg from "assets/home_bg.jpg";
+import { DeviceQuery } from "./responsive";
 
 export const GlobalStyle = createGlobalStyle`
     //reset
     ${reset}
-    button { border:none;cursor: pointer; }
+    button { border:none;cursor: pointer;font-family: 'Noto Sans KR',sans-serif;font-weight:400; }
     a { text-decoration:none;cursor: pointer; }
-
-    html { 
-        font-size:62.5%;
-    }
+    html { font-size:62.5%; }
     body {
         background-color:${({theme})=>theme.colorVariant.black900};
         font-family: 'Noto Sans KR',sans-serif;font-weight:400;
-        font-size: 1.4vw;font-weight:400;
+        font-size: 1.6rem;
+        font-weight:400;
         line-height: normal; //line-height:1 대신 normal 사용   
         &.off-scroll { overflow-y:hidden; }
     }
     * { 
         color:${({theme})=>theme.colorVariant.white};     
     }
+    ${DeviceQuery.medium`
+        html { 
+            font-size:50%; 
+            text-size-adjust:none;
+            -webkit-text-size-adjust:none; 
+            -moz-text-size-adjust:none;
+            -ms-text-size-adjust:none;
+        }
+        body { font-size:1.4vw; }
+    `}
+    ${DeviceQuery.xsmall`
+        html { font-size:25%; }
+        // body { font-size:3rem; }
+    `}
 `
 
 export const Font500 = css`
@@ -37,7 +50,7 @@ export const FlexRow = css`
 `
 
 export const FlexColumn = css`
-    display: flex;flex-direction:column
+    display: flex;flex-direction:column;
 `
 
 export const FlexColumnCenter = css`
@@ -79,6 +92,4 @@ export const CommonInput = styled.input<{width?:string,height?:string}>`
     font-size: 1.6rem;
     &::placeholder { font-size:1.6rem; }
 `
-
-/* width:35vw;height:4.75rem;margin-right:2rem; */
         

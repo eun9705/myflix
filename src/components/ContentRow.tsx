@@ -46,24 +46,24 @@ const ContentRow = ({title,fetchUrl}:MovieRowProps) => {
         <Swiper 
             // install Swiper modules
             modules={[Navigation, Pagination, Scrollbar, A11y]}
-            loop={true} // loop 기능을 사용 유무
-            navigation // arrow 버튼 사용 유무
-            pagination={{clickable: true}} // 페이지 버튼 사용 유무
+            loop={true}
+            navigation 
+            pagination={{clickable: true}}
             breakpoints={{
-                1378: {
-                    slidesPerView: 6, //한번에 보이는 슬라이드 개
+                1440: {
+                    slidesPerView: 6, 
                     slidesPerGroup: 6,
                 },
-                // 998: {
-                //     slidesPerView: 5, //한번에 보이는 슬라이드 개
-                //     slidesPerGroup: 5,
-                // },
-                625: {
-                    slidesPerView: 4, //한번에 보이는 슬라이드 개
+                1180: {
+                    slidesPerView: 5, 
+                    slidesPerGroup: 5,
+                },
+                820: {
+                    slidesPerView: 4,
                     slidesPerGroup: 4,
                 },
                 0: {
-                    slidesPerView: 3, //한번에 보이는 슬라이드 개
+                    slidesPerView: 3, 
                     slidesPerGroup: 3,
                 },
             }}
@@ -88,7 +88,7 @@ const MovieListWrapper = styled.article`
 
 const ImgWrapper = styled.div`
     position: relative;
-    width:97%;height:30.5vw;
+    width:97%;height:22vw;
     img { object-fit:cover;width:100%;min-height:100%;border-radius:2px; }   
 `
 
