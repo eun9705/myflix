@@ -84,7 +84,6 @@ const FormPage = () => {
                 localStorage.setItem('token',idTokenResult.token);
                 setIsLoginState(true);
                 setUserState({uid:uid});
-                return;
                 routeTo('/movie');
                 
             }
