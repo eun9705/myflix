@@ -51,7 +51,8 @@ const Header = () => {
 
     useEffect(()=>{
         setToggle(false);
-        if(document.getElementById('header-input') !== null) document.getElementById('header-input').value = null;
+        const inputEl:HTMLInputElement = document.getElementById('header-input') as HTMLInputElement;
+        if(inputEl !== null) inputEl.value = '';
     },[currentUrl]);
     
     return <HeaderWrapper className={(debouncedScollY > 30 || toggle) ? "on" : ""}>
