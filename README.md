@@ -6,8 +6,6 @@ TMDB Open API, Firebase를 활용하여 제작한 서비스입니다.
 TMDB Open API를 이용하여 Netflix와 비슷하게 구현해본 웹 서비스 입니다.<br />
 Button, form 요소를 최대한 재사용할 수 있는 방향으로 컴포넌트를 구성해보았으며,<br />
 React,Recoil,Vite, Styled-components,Typescript, useRouter, useScroll, useDebounce custom hook을 사용하여 구현하였습니다.<br /><br />
-※ 1920* 1080에 최적화 되어있습니다(반응형 추후 업데이트 예정)
-
 
 <p align="center">
   <img src="https://github.com/eun9705/myflix/assets/38933350/5643a871-8777-40ed-abb3-8afdc83e0787">
