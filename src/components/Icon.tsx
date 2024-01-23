@@ -8,16 +8,16 @@ type IconProps = {
 
 const Icon = ({icon}:IconProps) => {
     return <Svg xmlns="http://www.w3.org/2000/svg" width={IconSet[icon].width ? IconSet[icon].width : "1em"} height={IconSet[icon].height ? IconSet[icon].height : "1em"} viewBox={IconSet[icon].viewBox} >
-        {IconSet[icon].path.map((item)=>{
-            return <path d={item} fill={IconSet[icon].fill} stroke={IconSet[icon].stroke} stroke-width={IconSet[icon].strokeWidth} stroke-linecap={IconSet[icon].strokeLinecap}/>
+        {IconSet[icon].path.map((item,index)=>{
+            return <path d={item} fill={IconSet[icon].fill} stroke={IconSet[icon].stroke} strokeWidth={IconSet[icon].strokeWidth} strokeLinecap={IconSet[icon].strokeLinecap} key={index}/>
         })}
     </Svg>
 }
 
 const Svg = styled.svg`
-    ${DeviceQuery.small`
+    /* ${DeviceQuery.small`
         width:1em;height:1em;
-    `}
+    `} */
 `
 
 export default Icon;

@@ -54,22 +54,21 @@ const ContentRow = ({title,fetchUrl}:MovieRowProps) => {
 
     return <MovieListWrapper>
         <h2>{title}</h2>
-        <Swiper 
-            // install Swiper modules
+        <Swiper
             modules={[Navigation, Pagination, Scrollbar, A11y]}
             loop={true}
             navigation 
             pagination={{clickable: true}}
             breakpoints={{
-                1440: {
+                1441: {
                     slidesPerView: 6, 
                     slidesPerGroup: 6,
                 },
-                1180: {
+                1181: {
                     slidesPerView: 5, 
                     slidesPerGroup: 5,
                 },
-                820: {
+                821: {
                     slidesPerView: 4,
                     slidesPerGroup: 4,
                 },
@@ -80,9 +79,9 @@ const ContentRow = ({title,fetchUrl}:MovieRowProps) => {
             }}
         >
             {movieList.map((movieItem) => {
-                return <SwiperSlide className="slider">
+                return <SwiperSlide className="slider" key={movieItem.id}>
                     <ImgWrapper onClick={()=>openModal(movieItem)}>
-                        <img key={movieItem.id} src={`https://image.tmdb.org/t/p/original/${movieItem?.poster_path}`} alt={movieItem.name} />
+                        <img src={`https://image.tmdb.org/t/p/original/${movieItem?.poster_path}`} alt={movieItem.name} />
                     </ImgWrapper>
                 </SwiperSlide>
             })}
@@ -92,9 +91,16 @@ const ContentRow = ({title,fetchUrl}:MovieRowProps) => {
 }
 
 const MovieListWrapper = styled.article`
-    margin:5vw 0;overflow-x: visible;
+    margin:3vw 0;overflow-x: visible;
     .swiper-horizontal { padding:0 4%; }
-    h2 { margin-bottom:.5em;padding-left:4%; }
+    h2 { margin-bottom:.5em;padding-left:4%;font-size:1.4vw; }
+    ${DeviceQuery.small`
+        margin:5vw 0;
+        h2 { font-size:2.5rem; }
+    `} 
+    ${DeviceQuery.xsmall`
+        h2 { font-size:3.5rem; }
+    `} 
 `
 
 const ImgWrapper = styled.div`

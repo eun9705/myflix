@@ -15,8 +15,8 @@ const Footer = () => {
     }
     return <FooterWapper>
             <ul>
-                {Object.entries(url).map(([key,value])=>{
-                    return <li><Link to={value} target="_blank">{key}</Link></li>
+                {Object.entries(url).map(([name,value])=>{
+                    return <li key={name}><Link to={value} target="_blank">{name}</Link></li>
                 })}
             </ul>
             <span>
@@ -30,7 +30,7 @@ const Footer = () => {
 const FooterWapper = styled.footer`
     max-height: 98rem;padding: 4%;box-sizing:border-box;
     ul { display: grid;grid-template-columns: repeat(4,1fr);grid-row-gap:2rem;margin-bottom:80px; }
-    * { color:${({theme})=>theme.colorVariant.black800};font-size:13px; }
+    * { color:${({theme})=>theme.colorVariant.black800}; }
     ${DeviceQuery.xsmall`
         ul { grid-template-columns: repeat(2,1fr); }
     `}

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import styled from "styled-components";
-import { FlexColumnCenterCenter } from "style/globalStyle";
+import { CloseButton } from "style/globalStyle";
 import { useRouter } from "hooks/useRouter";
 import Icon from "../components/Icon";
 
@@ -19,9 +19,9 @@ const ContentPlayPage = () => {
     },[]);
 
     return <CotentPlayModalWrapper>
-        <button className="close-btn" onClick={()=>goBack(2)}>
+        <CloseButton onClick={goBack} rotate="180deg" left="15px" top="15px">
             <Icon icon="arrow"/>
-        </button>
+        </CloseButton>
         <Iframe
             src={`https://www.youtube.com/embed/${searchParams.get('q')}?controls=0&autoplay=1&mute=1&loop=1&mute=1&playlist=${searchParams.get('q')}`}
             width="640"
@@ -34,13 +34,6 @@ const ContentPlayPage = () => {
 const CotentPlayModalWrapper = styled.div`
     position: absolute;left:0;top:0;width:100%;height:100%;z-index:10;
     background-color: black;
-    .close-btn {
-        position: absolute;left:15px;top:10px;z-index:2;
-        ${FlexColumnCenterCenter}
-        width: 5rem;height:5rem;
-        background-color:#333;
-        transform:rotate(180deg);
-    }
 `
 
 const Iframe = styled.iframe`

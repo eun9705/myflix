@@ -20,6 +20,7 @@ export const GlobalStyle = createGlobalStyle`
     * { 
         color:${({theme})=>theme.colorVariant.white};     
     }
+    .desktop-none { display:none; }
     ${DeviceQuery.medium`
         html { 
             font-size:50%; 
@@ -30,9 +31,15 @@ export const GlobalStyle = createGlobalStyle`
         }
         body { font-size:1.4vw; }
     `}
+    ${DeviceQuery.small`
+        .tablet-none { display:none; }
+        .desktop-none { display:block; }
+        body { font-size:2vw; }
+    `}
     ${DeviceQuery.xsmall`
         html { font-size:25%; }
         .mobile-none { display:none; }
+        body { font-size:12px; }
     `}
 `
 
@@ -100,4 +107,34 @@ export const CommonInput = styled.input<{width?:string,height?:string}>`
         &::placeholder { font-size:4rem; }
     `}
 `
-        
+
+export const ResultWrapper = styled.section`
+    padding: 12rem 4% 0;
+    h3 { font-size:2.4rem; }
+    ${DeviceQuery.xsmall`
+        padding: 20rem 4%;
+        h3 { font-size:4rem; }
+    `}
+`
+
+export const CloseButton = styled.button<{rotate?:string,left?:string,right?:string,top?:string}>`
+    position: absolute;
+    z-index:2;
+    ${(props)=>props.left && css`
+        left:${props.left || 0};
+    `}
+    ${(props)=>props.right && css`
+        right:${props.right || 0};
+    `}
+    ${(props)=>props.top && css`
+        top:${props.top || 0};
+    `}
+    ${FlexColumnCenterCenter}
+    width: 5rem;height:5rem;
+    background-color:#333;
+    border-radius:50%;
+    transform:rotate(${(props)=>props.rotate || 0});
+    ${DeviceQuery.small`
+        min-width:50px;min-height:50px;
+    `}
+`

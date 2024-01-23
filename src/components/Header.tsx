@@ -1,11 +1,14 @@
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { Link } from "react-router-dom";
 import { useRecoilValue,useSetRecoilState } from 'recoil';
+import axios from 'axios';
 import { isLoggedInState, userState } from 'atom/login';
 import { authService } from 'firebase/firebase';
 import { signOut } from 'firebase/auth';
+import { tmdbError } from 'api/tmdbError';
 import styled from "styled-components";
 import { FlexRow, FlexRowCenter, FlexRowSpaceBetween } from "style/globalStyle";
+import { DeviceQuery } from 'style/responsive';
 import { useRouter } from 'hooks/useRouter';
 import { useScroll } from "hooks/useScroll";
 import { useDebounce } from "hooks/useDebounce";
@@ -14,18 +17,14 @@ import GlobalNavigationBar from "./GlobalNavigationBar";
 import BasicButton from "./BasicButton";
 import Icon from './Icon';
 import logo from "assets/logo.svg";
-import { DeviceQuery } from 'style/responsive';
-import axios from 'axios';
-import { tmdbError } from 'api/tmdbError';
 
 const Header = () => {
     const setIsLoginState = useSetRecoilState(isLoggedInState);
     const setUserState = useSetRecoilState(userState);
-    const { routeTo } = useRouter();
+    const { routeTo,currentUrl } = useRouter();
+    const [toggle,setToggle] = useState<boolean>(false);
 
     const logout = useCallback(async() => {
-        const checkoutLogout = window.confirm('로그아웃 하시겠습니까?');
-        if(!checkoutLogout) return;
         try {
             await signOut(authService);
             setIsLoginState(false);
@@ -43,15 +42,26 @@ const Header = () => {
 
     const sendQuery = (event:ChangeEvent<HTMLInputElement>) => {
         routeTo(`/search?q=${event.currentTarget.value}`);
+        if(event.currentTarget.value === '') routeTo('/movie');
     }  
 
     const { scrollY }  = useScroll();
-    const debouncedScollY = useDebounce(scrollY,300);
+    const debouncedScollY = useDebounce(scrollY,100);
     const isLogIn = useRecoilValue(isLoggedInState);
+
+    useEffect(()=>{
+        setToggle(false);
+        if(document.getElementById('header-input') !== null) document.getElementById('header-input').value = null;
+    },[currentUrl]);
     
-    return <HeaderWrapper className={debouncedScollY > 30 ? "on" : ""}>
-        <Link to={'/'} className='mobile-none'><img src={logo} alt="로고" /></Link>
-        {isLogIn ? <GlobalNavigationBar navigationContent={GlobalNavigationBarContent}/>: <BasicButton name="로그인" size="small" onClickFunc={()=>routeTo('/login')} />}
+    return <HeaderWrapper className={(debouncedScollY > 30 || toggle) ? "on" : ""}>
+        <LeftSideWrapper>
+            {isLogIn && <button onClick={()=>setToggle(!toggle)} className='desktop-none'>
+                <Icon icon="hamburger" />
+            </button>}
+            <Link to={'/'}><img src={logo} alt="로고" /></Link>
+        </LeftSideWrapper>
+        {isLogIn ? <GlobalNavigationBar navigationContent={GlobalNavigationBarContent} toggle={toggle} onClickFunc={logout} />: <BasicButton name="로그인" size="small" onClickFunc={()=>routeTo('/login')} />}
         {isLogIn && <RightSideWrapper>
             <SearchWrapper>
                 <Icon icon='search' />
@@ -69,7 +79,6 @@ const HeaderWrapper = styled.header`
     &.on {
         background-color: ${({theme})=>theme.colorVariant.black900};
     }
-    img { display:block; }
     ${DeviceQuery.medium`
         height:9rem;
     `}
@@ -78,14 +87,26 @@ const HeaderWrapper = styled.header`
     `}
 `
 
+const LeftSideWrapper = styled.div`
+    ${FlexRowCenter}
+    button { min-height:27px;background-color:transparent; } 
+    img { display:block; }
+`
+
 const RightSideWrapper = styled.div`
     ${FlexRow}
+    ${DeviceQuery.small`
+        > button { display:none; }
+    `}
 `
 
 const SearchWrapper = styled.div`
     ${FlexRowCenter};margin-right:1rem;gap:2%;padding-left:2%;
     background: rgba(0,0,0,.75);border:1px solid hsla(0,0%,100%,.85);
     input { max-height:30px;background: transparent;border: none;box-sizing: border-box;color: #fff;display: inline-block;font-size: 14px;outline: none;padding: 7px 14px 7px 7px;width: 212px; }
+    ${DeviceQuery.xsmall`
+        width:100px;
+    `}
 `
 
 export default Header;

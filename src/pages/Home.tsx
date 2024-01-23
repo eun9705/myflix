@@ -62,12 +62,9 @@ const InputButtonWrapper = styled.div`
     ${DeviceQuery.small`
         ${FlexColumn};
         > input {
-            width: 50%;
+            width: 60%;
         }
         > button { margin-top:10px; }
-    `}
-    ${DeviceQuery.xsmall`
-        width:60%;
     `}
 `
 

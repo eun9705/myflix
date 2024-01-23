@@ -6,13 +6,14 @@ import { useRouter } from "hooks/useRouter";
 import { useRecoilValue } from "recoil";
 import { userState } from "atom/login";
 import { db } from "firebase/firebase";
+import { arrayRemove, arrayUnion, doc,getDoc, setDoc } from "firebase/firestore";
 import styled from "styled-components";
-import { FlexColumn, FlexColumnCenter, FlexColumnCenterCenter, FlexRow, FlexRowCenter, Font700 } from "style/globalStyle";
+import { CloseButton, FlexColumn, FlexColumnCenter, FlexRow, FlexRowCenter, Font700 } from "style/globalStyle";
+import { DeviceQuery } from "style/responsive";
 import { ContentInfoType, CreditsType, DetailInfoType, GenresType } from "types/movie";
 import BasicButton from "./BasicButton";
 import Icon from "./Icon";
 import IconButton from "./IconButton";
-import { arrayRemove, arrayUnion, doc,getDoc, setDoc } from "firebase/firestore";
 
 
 type DetailProps = {
@@ -136,9 +137,9 @@ const DetailModal = ({selectedContent,onClickFunc}:DetailProps) => {
         <MovieDetailModalWrapper>
             <ScrollArea>
                 <MovideModalContent className={viewAll ? "height-change" : ""}>
-                    <button className="close-btn" onClick={onClickFunc}>
+                    <CloseButton onClick={onClickFunc} rotate="45deg" right="15px" top="10px">
                         <Icon icon="plus"/>
-                    </button>
+                    </CloseButton>
                     <TitleArea background={`https://image.tmdb.org/t/p/original/${detailInfo?.backdrop_path}`}>
                         <article>
                             <h3>{title || original_name || name}</h3>
@@ -178,7 +179,7 @@ const DetailModal = ({selectedContent,onClickFunc}:DetailProps) => {
                                 })}
                             </ul>
                         </DetailList>
-                        {(credits && credits.length > 15) && <button className="detail-btn" onClick={()=>{setViewAll(!viewAll)}}>{viewAll ? "닫기" : "더보기"}</button>}
+                        {(credits && credits.length > 12) && <button className="detail-btn" onClick={()=>{setViewAll(!viewAll)}}>{viewAll ? "닫기" : "더보기"}</button>}
                     </ContentWrapper>
                 </MovideModalContent>
             </ScrollArea>
@@ -197,19 +198,11 @@ const ScrollArea = styled.div`
 `
 
 const MovideModalContent = styled.section`
-    position: relative;
-    width:850px;min-height:900px;background-color:#181818;border-radius:10px;margin-top:60px;
-    .close-btn {
-        position: absolute;right:15px;top:10px;z-index:2;
-        ${FlexColumnCenterCenter}
-        width: 5rem;height:5rem;
-        background-color:#333;
-        border-radius:50%;transform:rotate(45deg);
-        svg {
-            width: 4rem;height:4rem;
-        }
-    }
+    position: relative;width:850px;min-height:900px;background-color:#181818;border-radius:10px;margin-top:60px;
     &.height-change { min-height:1000px; }
+    ${DeviceQuery.small`
+        margin-top:0;
+    `}
 `
 
 const TitleArea = styled.div<{background:string}>`
@@ -229,6 +222,12 @@ const TitleArea = styled.div<{background:string}>`
             ${Font700}
         }
     }
+    ${DeviceQuery.xsmall`
+        height:350px;
+        article {
+            h3 { font-size:5rem; }
+        }
+    `}
 `
 
 const ButtonWrapper = styled.div`
@@ -242,8 +241,7 @@ const ContentWrapper = styled.article`
     padding: 1% 4%;
     .info-span > span {
         display: inline-block;
-        font-size: 1.4rem;color:#777;border:1px solid #777;padding:.7%;
-        margin-bottom: 10px;
+        font-size: 1.4rem;color:#777;border:1px solid #777;padding:.7%;margin-bottom: 10px;
         &.seasons-span {
             background-color: ${({theme})=>theme.colorVariant.mainColor};
             border-color: ${({theme})=>theme.colorVariant.mainColor};
@@ -256,7 +254,16 @@ const ContentWrapper = styled.article`
     .detail-btn { 
         align-self:flex-end;
         padding:.7rem 1rem;border-radius:.5rem;background-color:rgba(0,0,0,.7);font-size: 1.4rem;border:1px solid #777;color:#777;
+        
     }
+    ${DeviceQuery.small`
+        .detail-btn { 
+            font-size:inherit;
+        }
+    `}
+    ${DeviceQuery.xsmall`
+        h4 { font-size:4rem; }
+    `}
 `
 const DetailList = styled.div`
     ${FlexRow}
@@ -268,6 +275,9 @@ const DetailList = styled.div`
         &.on { -webkit-line-clamp:unset; }
         li { display: inline; }
     }
+    ${DeviceQuery.small`
+        span { min-width:60px; }
+    `}
 `
 
 export default DetailModal;

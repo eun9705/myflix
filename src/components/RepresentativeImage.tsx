@@ -9,6 +9,7 @@ import { FlexColumnCenter, FlexRowCenter, Font700 } from "style/globalStyle";
 import { useRouter } from "hooks/useRouter";
 import BasicButton from "./BasicButton";
 import DetailModal from "./DetailModal";
+import { DeviceQuery } from "style/responsive";
 
 
 type RepresentativeImageProps = {
@@ -68,7 +69,7 @@ const RepresentativeImage = ({genres}:RepresentativeImageProps)=> {
             <RepresentativeImageWrapper background={`https://image.tmdb.org/t/p/original/${contentInfo?.backdrop_path}`}>
                 <TextWrapper>
                     <h1>{contentInfo?.title || contentInfo?.name || contentInfo?.original_name}</h1>
-                    <p>{truncatOverview(contentInfo?.overview,100)}</p>
+                    <p className="mobile-none">{truncatOverview(contentInfo?.overview,100)}</p>
                     <ButtonWrapper>
                         {contentInfo?.videos?.results.length !== 0 && <BasicButton name="재생" onClickFunc={()=>{routeTo(`/watch?q=${contentInfo?.videos?.results[0].key}`)}} bgcolor="#FFF" color="#333" icon="play"/>}
                         <BasicButton name="상세 정보" onClickFunc={openDetailModal} bgcolor="#555" icon="info"/>
@@ -91,6 +92,9 @@ const RepresentativeImageWrapper = styled.div<{background:string}>`
     &:after {
         position: absolute;left:0;bottom:-1px;content: '';display:block;width:100%;height:14.7vw;background:linear-gradient(180deg,hsla(0,0%,8%,0) 0,hsla(0,0%,8%,.15) 15%,hsla(0,0%,8%,.35) 29%,hsla(0,0%,8%,.58) 44%,#141414 68%,#141414) repeat-x 0 top;
     }
+    ${DeviceQuery.xsmall`
+        height:350px;
+    `}
 `
 
 const TextWrapper = styled.div`
@@ -103,6 +107,13 @@ const TextWrapper = styled.div`
         margin: 4rem 0 3rem;
         font-size:1.2vw; 
     }
+    ${DeviceQuery.small`
+        p { font-size:1.5rem; }
+    `}
+    ${DeviceQuery.xsmall`
+        width:60%;
+        h1 { font-size:4rem;margin-bottom: 8px; }
+    `}
 `
 
 const ButtonWrapper = styled.div`

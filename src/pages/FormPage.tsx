@@ -62,7 +62,7 @@ const FormPage = () => {
             return;
         }
         try {
-            const { user } = await createUserWithEmailAndPassword(authService,emailValue,pwValue)
+            const { user } = await createUserWithEmailAndPassword(authService,emailValue,pwValue);
             if(typeof(user) === 'object') {
                 emailRef.current!.value = '';
                 pwRef.current!.value = '';

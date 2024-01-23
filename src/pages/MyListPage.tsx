@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { tmdbError } from "api/tmdbError";
 import { instance } from "api/axios";
-import styled from "styled-components";
 import { ContentInfoType } from "types/movie";
 import { useRecoilValue } from "recoil";
 import { userState } from "atom/login";
-import ContentResultList from "components/ContentResultList";
 import { db } from "firebase/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import { ResultWrapper } from "style/globalStyle";
+import ContentResultList from "components/ContentResultList";
 
 
 const MyListPage = () => {
@@ -78,15 +78,10 @@ const MyListPage = () => {
         loadFavoriteList();
     },[]);
 
-    return <MyListPageWrapper>
+    return <ResultWrapper>
         <h3>내가 찜한 콘텐츠</h3>
         <ContentResultList resultContent={favoriteData}/>
-    </MyListPageWrapper>
+    </ResultWrapper>
 }
-
-const MyListPageWrapper = styled.section`
-    padding: 12rem 4% 0;
-    h3 { font-size:2.4rem; }
-`
 
 export default MyListPage;

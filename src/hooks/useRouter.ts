@@ -10,6 +10,6 @@ export const useRouter = () => {
                 params:optionVal
             }
         }),
-        goBack: (number:number)=> router(-number),
+        goBack: ()=> router(-1),
     }
 }

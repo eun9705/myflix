@@ -35,11 +35,19 @@ const ButtonWrapper = styled.button<{height?:string,bgcolor?:string,color?:strin
     }
     ${DeviceQuery.medium`
         font-size:2rem;
+        min-height:50px;
+        &.small {
+            min-height:40px;
+        }
+    `}
+    ${DeviceQuery.small`
+        min-height:40px;font-size:12px;
+        svg { width:14px;height:14px; }
     `}
     ${DeviceQuery.xsmall`
-        font-size:4rem;padding:0 4%;height:10rem;
+        padding:0 4%;height:10rem;
         &.small {
-            font-size:4rem;padding: 0 2%;
+            padding: 0 2%;
         }
     `}
 `

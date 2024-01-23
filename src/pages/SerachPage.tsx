@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import styled from "styled-components"
 import axios from "axios";
 import { tmdbError } from "api/tmdbError";
 import { instance } from "api/axios";
 import { requests } from "api/requests";
 import { useDebounce } from "hooks/useDebounce";
 import { ContentInfoType } from "types/movie";
+import { ResultWrapper } from "style/globalStyle";
 import ContentResultList from "components/ContentResultList";
-
 
 
 const SearchPage = () => {
@@ -83,16 +82,11 @@ const SearchPage = () => {
     },[debouncedValue]);
 
     
-    return <SearchPageWrapper>
+    return <ResultWrapper>
         <h3>검색결과</h3>
         <ContentResultList resultContent={serachData}/>
-    </SearchPageWrapper>
+    </ResultWrapper>
 }
-
-const SearchPageWrapper = styled.section`
-    padding: 12rem 4% 0;
-    h3 { font-size:2.4rem; }
-`
 
 
 export default SearchPage;
