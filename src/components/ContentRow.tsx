@@ -2,7 +2,6 @@ import { useCallback, useEffect, useState } from "react";
 import { instance } from "api/axios";
 import styled from "styled-components";
 import { Swiper,SwiperSlide } from "swiper/react";
-import {Navigation, Pagination, Scrollbar, A11y} from 'swiper/modules';
 import 'swiper/css';
 import { ContentInfoType } from "types/movie";
 import DetailModal from "./DetailModal";
@@ -55,26 +54,24 @@ const ContentRow = ({title,fetchUrl}:MovieRowProps) => {
     return <MovieListWrapper>
         <h2>{title}</h2>
         <Swiper
-            modules={[Navigation, Pagination, Scrollbar, A11y]}
             loop={true}
-            navigation 
-            pagination={{clickable: true}}
+            loopAddBlankSlides={true}
             breakpoints={{
                 1441: {
                     slidesPerView: 6, 
-                    slidesPerGroup: 6,
+                    slidesPerGroup: 5,
                 },
                 1181: {
                     slidesPerView: 5, 
-                    slidesPerGroup: 5,
+                    slidesPerGroup: 4,
                 },
                 821: {
                     slidesPerView: 4,
-                    slidesPerGroup: 4,
+                    slidesPerGroup: 3,
                 },
                 0: {
                     slidesPerView: 3, 
-                    slidesPerGroup: 3,
+                    slidesPerGroup: 2,
                 },
             }}
         >
