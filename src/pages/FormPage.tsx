@@ -120,8 +120,12 @@ const FormPage = () => {
     return <CommonPageWrapper>
         <FormContent>
             <h2>{title}</h2>
-            <CommonInput type="text" name="email" placeholder="이메일 주소" ref={emailRef}/>
-            <CommonInput type="password" name="password" placeholder="비밀번호" autoComplete="on" className="last" ref={pwRef} onKeyDown={enterHandler}/>
+            <div>
+                <label htmlFor="email-input">이메일</label>
+                <CommonInput type="text" name="email" placeholder="이메일" ref={emailRef} id="email-input"/>
+            </div>
+            <label htmlFor="pw-input">비밀번호</label>
+            <CommonInput type="password" name="password" placeholder="비밀번호" autoComplete="on" className="last" ref={pwRef} onKeyDown={enterHandler} id="pw-input"/>
             {currentUrl === '/sign-up' && <span>* 비밀번호 영문 숫자 특수기호 조합 8-15자리</span>}
             <BasicButton name={title} height="4.77rem" onClickFunc={currentUrl === '/login' ? onLoginSubmit : onSingUpSubmit}/>
             <div>
